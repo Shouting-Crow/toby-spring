@@ -6,7 +6,10 @@ import java.sql.*;
 
 public class UserDao {
 
-    private ConnectionMaker connectionMaker;
+    private ConnectionMaker connectionMaker; //인스턴스 변수
+    private Connection c;
+    private User user;
+
 
     public UserDao(ConnectionMaker connectionMaker){
         this.connectionMaker = connectionMaker;
@@ -32,25 +35,25 @@ public class UserDao {
 
     public User get(String id) throws ClassNotFoundException, SQLException{
 
-        Connection connection = connectionMaker.makeConnection();
+        this.c = connectionMaker.makeConnection();
+        this.user = new User();
 
-        PreparedStatement ps = connection.prepareStatement(
+        PreparedStatement ps = c.prepareStatement(
                 "select * from users where id = ?");
 
         ps.setString(1, id);
 
         ResultSet resultSet = ps.executeQuery();
         resultSet.next();
-        User user = new User();
-        user.setId(resultSet.getString("id"));
-        user.setName(resultSet.getString("name"));
-        user.setPassword(resultSet.getString("password"));
+        this.user.setId(resultSet.getString("id"));
+        this.user.setName(resultSet.getString("name"));
+        this.user.setPassword(resultSet.getString("password"));
 
         resultSet.close();
         ps.close();
-        connection.close();
+        c.close();
 
-        return user;
+        return this.user;
     }
 
 
