@@ -11,7 +11,11 @@ public class UserDao {
     private User user;
 
 
-    public UserDao(ConnectionMaker connectionMaker){
+//    public UserDao(ConnectionMaker connectionMaker){
+//        this.connectionMaker = connectionMaker;
+//    }
+
+    public void setConnectionMaker(ConnectionMaker connectionMaker){
         this.connectionMaker = connectionMaker;
     }
 
