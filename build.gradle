@@ -13,7 +13,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
-    implementation 'org.mariadb.jdbc:mariadb-java-client:2.4.0'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:1.7.0'
 
     implementation 'org.springframework:spring-context:3.1.0.RELEASE'
     implementation 'org.springframework:spring-core:3.1.0.RELEASE'
@@ -21,6 +21,8 @@ dependencies {
     implementation 'org.springframework:spring-webmvc:3.1.0.RELEASE'
     implementation 'org.springframework:spring-beans:3.1.0.RELEASE'
     implementation 'org.springframework:spring-expression:3.1.0.RELEASE'
+    implementation 'org.springframework:spring-jdbc:3.1.0.RELEASE'
+
 
     implementation 'commons-logging:commons-logging:1.1.1'
 
