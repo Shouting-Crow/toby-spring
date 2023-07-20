@@ -5,6 +5,16 @@ public class User {
     String name;
     String password;
 
+    public User(String id, String name, String password){
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
+
+    public User(){
+        //Default Constructor
+    }
+
     public String getId(){
         return this.id;
     }
