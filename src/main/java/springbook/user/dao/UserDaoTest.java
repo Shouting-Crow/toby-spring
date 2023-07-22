@@ -10,25 +10,29 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import springbook.user.domain.User;
 
+import javax.sql.DataSource;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/dataSourceContext.xml")
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = "/test-dataSourceContext.xml")
 public class UserDaoTest {
 
-    @Autowired
-    private ApplicationContext context;
+//    @Autowired
+//    private UserDao dao;
+    UserDao dao;
 
-    @Autowired
-    private UserDao dao;
+//    @Autowired
+//    private DataSource dataSource;
 
     private User user1;
     private User user2;
@@ -44,6 +48,12 @@ public class UserDaoTest {
         this.user1 = new User("whiteship", "백사장", "spring1");
         this.user2 = new User("leeman", "이사람", "spring2");
         this.user3 = new User("kimid", "김인간", "spring3");
+
+        dao = new UserDao();
+        DataSource dataSource = new SingleConnectionDataSource(
+                "jdbc:mariadb://localhost:3306/testdb", "root", "1234", true
+        );
+        dao.setDataSource(dataSource);
 
     }
 
