@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import springbook.user.domain.User;
@@ -26,7 +27,9 @@ public class UserDaoTest {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
     private UserDao dao;
+
     private User user1;
     private User user2;
     private User user3;
@@ -37,7 +40,6 @@ public class UserDaoTest {
 
     @Before
     public void setUp(){
-        this.dao = context.getBean("userDao", UserDao.class);
 
         this.user1 = new User("whiteship", "백사장", "spring1");
         this.user2 = new User("leeman", "이사람", "spring2");
