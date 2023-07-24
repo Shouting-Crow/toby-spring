@@ -61,24 +61,31 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
+        StatementStrategy strategy = new DeleteAllStatement();
+        jdbcContextWithStatementStrategy(strategy);
+    }
+
+    public void jdbcContextWithStatementStrategy(StatementStrategy strategy) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        try{
+        try {
             connection = dataSource.getConnection();
-            preparedStatement = connection.prepareStatement("delete from users");
+
+            preparedStatement = strategy.makePreparedStatement(connection);
+
             preparedStatement.executeUpdate();
         } catch (SQLException e){
             throw e;
         } finally {
-            if (preparedStatement != null){
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e){
 
                 }
             }
-            if (connection != null){
+            if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException e){
