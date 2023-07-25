@@ -1,4 +1,4 @@
-package springbook.user.dao;
+package springbook.user.dao.test;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +14,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
 import javax.sql.DataSource;
@@ -39,7 +40,7 @@ public class UserDaoTest {
     private User user3;
 
     public static void main(String[] args) {
-        JUnitCore.main("springbook.user.dao.UserDaoTest");
+        JUnitCore.main("springbook.user.dao.test.UserDaoTest");
     }
 
     @Before
