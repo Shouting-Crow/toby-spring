@@ -1,8 +1,6 @@
 package springbook.user.dao;
 
 import org.springframework.dao.EmptyResultDataAccessException;
-import springbook.user.dao.strategy.AddStatement;
-import springbook.user.dao.strategy.DeleteAllStatement;
 import springbook.user.domain.User;
 
 import javax.sql.DataSource;
@@ -16,10 +14,25 @@ public class UserDao {
         this.dataSource = dataSource;
     }
 
-    public void add(User user) throws SQLException{
-        StatementStrategy strategy = new AddStatement(user);
-        jdbcContextWithStatementStrategy(strategy);
-    }
+    public void add(final User user) throws SQLException{
+
+        jdbcContextWithStatementStrategy(
+                new StatementStrategy() {
+                    @Override
+                    public PreparedStatement makePreparedStatement(Connection connection) throws SQLException {
+                        PreparedStatement preparedStatement = connection.prepareStatement(
+                                "insert into users(id, name, password) values(?,?,?)"
+                        );
+
+                        preparedStatement.setString(1, user.getId());
+                        preparedStatement.setString(2, user.getName());
+                        preparedStatement.setString(3, user.getPassword());
+
+                        return preparedStatement;
+                    }
+                });
+        }
+
 
     public User get(String id) throws SQLException{
 
@@ -50,8 +63,14 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
-        StatementStrategy strategy = new DeleteAllStatement();
-        jdbcContextWithStatementStrategy(strategy);
+        jdbcContextWithStatementStrategy(
+                new StatementStrategy() {
+            @Override
+            public PreparedStatement makePreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from users");
+                return preparedStatement;
+            }
+        });
     }
 
     public void jdbcContextWithStatementStrategy(StatementStrategy strategy) throws SQLException {
