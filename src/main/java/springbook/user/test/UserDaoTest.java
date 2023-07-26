@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
-import springbook.user.context.JdbcContext;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
@@ -42,9 +41,9 @@ public class UserDaoTest {
         );
         dao.setDataSource(dataSource);
 
-        JdbcContext jdbcContext = new JdbcContext();
-        jdbcContext.setDataSource(dataSource);
-        dao.setJdbcContext(jdbcContext);
+//        JdbcContext jdbcContext = new JdbcContext();
+//        jdbcContext.setDataSource(dataSource);
+//        dao.setJdbcContext(jdbcContext);
 
     }
 

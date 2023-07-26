@@ -12,16 +12,16 @@ import java.sql.SQLException;
 
 public class UserDao {
     private DataSource dataSource;
+    private JdbcContext jdbcContext;
 
     public void setDataSource(DataSource dataSource) {
+        this.jdbcContext = new JdbcContext();
+
+        this.jdbcContext.setDataSource(dataSource);
+
         this.dataSource = dataSource;
     }
 
-    private JdbcContext jdbcContext;
-
-    public void setJdbcContext(JdbcContext jdbcContext) {
-        this.jdbcContext = jdbcContext;
-    }
 
     public void add(final User user) throws ClassNotFoundException, SQLException{
         this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
@@ -66,17 +66,8 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
-
-        this.jdbcContext.workWithStatementStrategy(
-                new StatementStrategy() {
-                    @Override
-                    public PreparedStatement makePreparedStatement(Connection connection) throws SQLException {
-                        PreparedStatement preparedStatement = connection.prepareStatement("delete from users");
-                        return preparedStatement;
-                    }
-                });
+        this.jdbcContext.executeSql("delete from users");
     }
-
 
     public int getCount() throws SQLException {
         Connection connection = null;
