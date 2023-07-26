@@ -1,46 +1,32 @@
-package springbook.user.dao.test;
+package springbook.user.test;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import springbook.user.context.JdbcContext;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
 import javax.sql.DataSource;
-import java.sql.SQLDataException;
 import java.sql.SQLException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 //@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = "/test-dataSourceContext.xml")
+//@ContextConfiguration(locations = "/applicationContext.xml")
 public class UserDaoTest {
 
-//    @Autowired
-//    private UserDao dao;
     UserDao dao;
-
-//    @Autowired
-//    private DataSource dataSource;
 
     private User user1;
     private User user2;
     private User user3;
 
     public static void main(String[] args) {
-        JUnitCore.main("springbook.user.dao.test.UserDaoTest");
+        JUnitCore.main("springbook.user.test.UserDaoTest");
     }
 
     @Before
@@ -56,11 +42,15 @@ public class UserDaoTest {
         );
         dao.setDataSource(dataSource);
 
+        JdbcContext jdbcContext = new JdbcContext();
+        jdbcContext.setDataSource(dataSource);
+        dao.setJdbcContext(jdbcContext);
+
     }
 
 
     @Test
-    public void addAndGet() throws SQLException {
+    public void addAndGet() throws SQLException, ClassNotFoundException {
 
         dao.deleteAll();
         assertThat(dao.getCount(), is(0));
@@ -80,7 +70,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void countTest() throws SQLException {
+    public void countTest() throws SQLException, ClassNotFoundException {
 
         dao.deleteAll();
         assertThat(dao.getCount(), is(0));

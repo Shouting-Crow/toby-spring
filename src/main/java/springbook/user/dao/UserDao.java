@@ -1,36 +1,39 @@
 package springbook.user.dao;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import springbook.user.context.JdbcContext;
 import springbook.user.domain.User;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDao {
-
     private DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public void add(final User user) throws SQLException{
+    private JdbcContext jdbcContext;
 
-        jdbcContextWithStatementStrategy(
-                new StatementStrategy() {
-                    @Override
-                    public PreparedStatement makePreparedStatement(Connection connection) throws SQLException {
-                        PreparedStatement preparedStatement = connection.prepareStatement(
-                                "insert into users(id, name, password) values(?,?,?)"
-                        );
+    public void setJdbcContext(JdbcContext jdbcContext) {
+        this.jdbcContext = jdbcContext;
+    }
 
-                        preparedStatement.setString(1, user.getId());
-                        preparedStatement.setString(2, user.getName());
-                        preparedStatement.setString(3, user.getPassword());
+    public void add(final User user) throws ClassNotFoundException, SQLException{
+        this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                PreparedStatement ps = c.prepareStatement("insert into users(id,name,password) value(?,?,?)");
+                ps.setString(1, user.getId());	//외부 add메소드의 user 변수에 접근 가능
+                ps.setString(2, user.getName()); //외부 add메소드의 user 변수에 접근 가능
+                ps.setString(3, user.getPassword()); //외부 add메소드의 user 변수에 접근 가능
+                return ps;
+            }
+        });
 
-                        return preparedStatement;
-                    }
-                });
         }
 
 
@@ -63,45 +66,17 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
-        jdbcContextWithStatementStrategy(
+
+        this.jdbcContext.workWithStatementStrategy(
                 new StatementStrategy() {
-            @Override
-            public PreparedStatement makePreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement preparedStatement = connection.prepareStatement("delete from users");
-                return preparedStatement;
-            }
-        });
+                    @Override
+                    public PreparedStatement makePreparedStatement(Connection connection) throws SQLException {
+                        PreparedStatement preparedStatement = connection.prepareStatement("delete from users");
+                        return preparedStatement;
+                    }
+                });
     }
 
-    public void jdbcContextWithStatementStrategy(StatementStrategy strategy) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-
-        try {
-            connection = dataSource.getConnection();
-
-            preparedStatement = strategy.makePreparedStatement(connection);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e){
-            throw e;
-        } finally {
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e){
-
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e){
-
-                }
-            }
-        }
-    }
 
     public int getCount() throws SQLException {
         Connection connection = null;
