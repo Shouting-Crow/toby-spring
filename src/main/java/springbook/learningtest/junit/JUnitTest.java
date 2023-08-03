@@ -1,5 +1,6 @@
 package springbook.learningtest.junit;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,6 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.internal.matchers.IsCollectionContaining.hasItem;
-import static org.junit.matchers.JUnitMatchers.either;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/junit.xml")
@@ -49,7 +48,7 @@ public class JUnitTest {
         assertThat(testObjects, is(not(hasItem(this))));
         testObjects.add(this);
 
-        assertThat(contextObject, either(is(nullValue())).or(is(this.context)));
+        assertThat(contextObject, CoreMatchers.either(is(nullValue())).or(is(this.context)));
         contextObject = this.context;
     }
 }

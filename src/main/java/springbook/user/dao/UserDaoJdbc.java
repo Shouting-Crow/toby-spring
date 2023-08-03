@@ -60,7 +60,7 @@ public class UserDaoJdbc implements UserDao{
 
     @Override
     public int getCount() {
-        return this.jdbcTemplate.queryForInt("select count(*) from users");
+        return this.jdbcTemplate.queryForObject("select count(*) from users", Integer.class);
     }
 
     @Override
