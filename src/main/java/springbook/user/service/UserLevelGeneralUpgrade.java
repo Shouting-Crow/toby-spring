@@ -1,16 +1,20 @@
 package springbook.user.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import springbook.user.dao.UserDaoJdbc;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
+@Component
 public class UserLevelGeneralUpgrade implements UserLevelUpgradePolicy{
 
-    UserDaoJdbc userDao;
+    private final UserDaoJdbc userDao;
     public static final int MIN_LOGCOUNT_FOR_SILVER = 50;
     public static final int MIN_RECOMMNED_FOR_GOLD = 30;
 
-    public void setUserDao(UserDaoJdbc userDao) {
+    @Autowired
+    public UserLevelGeneralUpgrade(UserDaoJdbc userDao) {
         this.userDao = userDao;
     }
 

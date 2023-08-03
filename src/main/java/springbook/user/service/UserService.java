@@ -1,21 +1,22 @@
 package springbook.user.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
 import java.util.List;
 
+@Service
 public class UserService {
 
-    private UserDao userDao;
-    private UserLevelUpgradePolicy userLevelUpgradePolicy;
+    private final UserDao userDao;
+    private final UserLevelUpgradePolicy userLevelUpgradePolicy;
 
-    public void setUserDao(UserDao userDao){
+    @Autowired
+    public UserService(UserDao userDao, UserLevelUpgradePolicy userLevelUpgradePolicy) {
         this.userDao = userDao;
-    }
-
-    public void setUserLevelUpgradePolicy(UserLevelUpgradePolicy userLevelUpgradePolicy) {
         this.userLevelUpgradePolicy = userLevelUpgradePolicy;
     }
 
@@ -33,3 +34,4 @@ public class UserService {
         }
     }
 }
+

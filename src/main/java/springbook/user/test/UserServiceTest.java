@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertThat;
 import static springbook.user.service.UserLevelGeneralUpgrade.MIN_LOGCOUNT_FOR_SILVER;
 import static springbook.user.service.UserLevelGeneralUpgrade.MIN_RECOMMNED_FOR_GOLD;
 
@@ -26,9 +26,12 @@ public class UserServiceTest {
     @Autowired
     private UserDaoJdbc userDao;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     private List<User> users;
+
+    public UserServiceTest(){
+    }
 
     @Before
     public void setUp(){
