@@ -29,6 +29,8 @@ dependencies {
 
     implementation 'commons-logging:commons-logging:1.1.1'
 
+    implementation group: 'org.mockito', name: 'mockito-core', version: '2.2.0'
+
     implementation 'cglib:cglib:2.2'
 }
 
