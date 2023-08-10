@@ -7,7 +7,7 @@ public class UppercaseHandler implements InvocationHandler {
 
     Object target;
 
-    private UppercaseHandler(Object target){
+    public UppercaseHandler(Object target){
         this.target = target;
     }
 
