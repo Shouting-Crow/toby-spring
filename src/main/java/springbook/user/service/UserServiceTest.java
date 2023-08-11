@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -212,5 +213,10 @@ public class UserServiceTest {
 
         @Override
         public User get(String id) {throw new UnsupportedOperationException();}
+    }
+
+    @Test
+    public void advisorAutoProxyCreator(){
+        assertThat(testUserService, instanceOf(java.lang.reflect.Proxy.class));
     }
 }
