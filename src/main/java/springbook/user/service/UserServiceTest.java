@@ -154,6 +154,16 @@ public class UserServiceTest {
 
     }
 
+    @Test
+    public void advisorAutoProxyCreator(){
+        assertThat(testUserService, instanceOf(java.lang.reflect.Proxy.class));
+    }
+
+    @Test
+    public void readOnlyTransactionAttribute(){
+        testUserService.getAll();
+    }
+
 
     static class TestUserService extends UserServiceImpl {
         private String id;
@@ -165,6 +175,14 @@ public class UserServiceTest {
         protected void upgradeLevel(User user) {
             if (user.getId().equals(this.id)) throw new TestUserServiceException();
             super.upgradeLevel(user);
+        }
+
+        @Override
+        public List<User> getAll() {
+            for (User user : super.getAll()){
+                super.update(user);
+            }
+            return null;
         }
     }
 
@@ -215,8 +233,5 @@ public class UserServiceTest {
         public User get(String id) {throw new UnsupportedOperationException();}
     }
 
-    @Test
-    public void advisorAutoProxyCreator(){
-        assertThat(testUserService, instanceOf(java.lang.reflect.Proxy.class));
-    }
+
 }
