@@ -1,4 +1,4 @@
-package springbook.sqlService;
+package springbook.user.sqlService;
 
 public class SqlRetrievalFailureException extends RuntimeException{
     public SqlRetrievalFailureException(String message){
