@@ -9,9 +9,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
@@ -163,6 +165,17 @@ public class UserServiceTest {
     public void readOnlyTransactionAttribute(){
         testUserService.getAll();
     }
+
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    public void transactionSync(){
+        userService.deleteAll();
+
+        userService.add(users.get(0));
+        userService.add(users.get(1));
+    }
+
 
 
     static class TestUserService extends UserServiceImpl {
