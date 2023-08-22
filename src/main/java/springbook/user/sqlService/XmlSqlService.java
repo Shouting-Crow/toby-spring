@@ -1,6 +1,8 @@
 package springbook.user.sqlService;
 
 import springbook.user.dao.UserDao;
+import springbook.user.sqlService.exception.SqlNotFoundException;
+import springbook.user.sqlService.exception.SqlRetrievalFailureException;
 import springbook.user.sqlService.jaxb.SqlType;
 import springbook.user.sqlService.jaxb.Sqlmap;
 

@@ -1,5 +1,7 @@
 package springbook.user.sqlService;
 
+import springbook.user.sqlService.exception.SqlNotFoundException;
+
 import java.util.HashMap;
 import java.util.Map;
 

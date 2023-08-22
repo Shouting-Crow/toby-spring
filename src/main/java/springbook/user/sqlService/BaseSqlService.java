@@ -1,5 +1,8 @@
 package springbook.user.sqlService;
 
+import springbook.user.sqlService.exception.SqlNotFoundException;
+import springbook.user.sqlService.exception.SqlRetrievalFailureException;
+
 import javax.annotation.PostConstruct;
 
 public class BaseSqlService implements SqlService{
