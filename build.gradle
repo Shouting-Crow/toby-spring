@@ -43,6 +43,8 @@ dependencies {
     implementation 'com.sun.xml.bind:jaxb-impl:2.2.5'
 
     implementation 'org.codehaus.castor:castor:1.2'
+
+    implementation 'org.hsqldb:hsqldb:1.8.0.10'
 }
 
 test {

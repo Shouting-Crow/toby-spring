@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/FactoryBeanTest-context.xml")
+@ContextConfiguration(locations = "/configFile/FactoryBeanTest-context.xml")
 public class FactoryBeanTest {
     @Autowired
     ApplicationContext context;

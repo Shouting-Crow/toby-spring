@@ -19,7 +19,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/OxmTest-context.xml")
+@ContextConfiguration(locations = "/configFile/OxmTest-context.xml")
 public class OxmTest {
     @Autowired
     Unmarshaller unmarshaller;
