@@ -3,7 +3,6 @@ package springbook.user.sqlService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.oxm.Unmarshaller;
-import springbook.user.dao.UserDao;
 import springbook.user.sqlService.exception.SqlRetrievalFailureException;
 import springbook.user.sqlService.jaxb.SqlType;
 import springbook.user.sqlService.jaxb.Sqlmap;
@@ -46,7 +45,7 @@ public class OxmSqlService implements SqlService{
 
     private class OxmSqlReader implements SqlReader {
         private Unmarshaller unmarshaller;
-        private Resource sqlmap = new ClassPathResource("sqlmap.xml", UserDao.class);
+        private Resource sqlmap = new ClassPathResource("/sqlmap.xml");
 
         public void setSqlmap(Resource sqlmap) {
             this.sqlmap = sqlmap;

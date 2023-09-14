@@ -10,10 +10,12 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
+import springbook.user.dao.AppContext;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
@@ -32,7 +34,8 @@ import static springbook.user.service.UserServiceImpl.MIN_LOGCOUNT_FOR_SILVER;
 import static springbook.user.service.UserServiceImpl.MIN_RECCOMEND_FOR_GOLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations= "/configFile/test-applicationContext.xml")
+@ContextConfiguration(classes = AppContext.class)
+@ActiveProfiles("test")
 public class UserServiceTest {
     @Autowired UserService userService;
     @Autowired UserService testUserService;
@@ -178,10 +181,11 @@ public class UserServiceTest {
 
 
 
-    static class TestUserService extends UserServiceImpl {
+    public static class TestUserService extends UserServiceImpl {
         private String id;
 
-        private TestUserService(String id) {
+        public TestUserService(){}
+        public TestUserService(String id) {
             this.id = id;
         }
 
